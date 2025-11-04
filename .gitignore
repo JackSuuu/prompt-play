@@ -34,3 +34,8 @@ build/
 *.zip
 *.tar.gz
 *.rar
+
+# Tex file
+*.aux
+*.out
+*.pdf
