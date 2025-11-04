@@ -2,6 +2,8 @@
 
 **PromptPlay** is an innovative sports matchmaking application that uses Large Language Models (LLMs) to connect players through natural language. Instead of rigid form-based filtering, users simply describe what they want to play in their own words, and the AI handles the rest.
 
+![](home.png)
+
 ## 🎯 Key Innovation
 
 Traditional sports matchmaking apps require users to fill out multiple fields (sport type, location, time, skill level, etc.). PromptPlay revolutionizes this by:
