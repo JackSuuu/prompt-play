@@ -166,9 +166,9 @@ Frontend will be available at: `http://localhost:5173`
 
 ## Next Steps for Full Implementation
 
-- [ ] Add user authentication
-- [ ] Implement chat functionality
-- [ ] Add persistent database (PostgreSQL)
+- [x] Add user authentication
+- [x] Implement chat functionality
+- [x] Add persistent database (PostgreSQL)
 - [ ] Deploy to cloud (backend + frontend)
 - [ ] Add email/SMS notifications
 - [ ] Implement real-time updates (WebSockets)
