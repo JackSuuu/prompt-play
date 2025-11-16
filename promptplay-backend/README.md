@@ -28,7 +28,7 @@ GROQ_API_KEY=your_actual_key_here
 ## Running
 
 ```bash
-python main.py
+python src/main.py
 ```
 
 Or with uvicorn:

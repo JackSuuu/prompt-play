@@ -2,7 +2,7 @@
 set -euo pipefail
 
 pushd promptplay-backend >/dev/null
-python main.py &
+python src/main.py &
 backend_pid=$!
 popd >/dev/null
 

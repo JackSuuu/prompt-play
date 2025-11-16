@@ -10,14 +10,14 @@ from dotenv import load_dotenv
 from groq import Groq
 import json
 
-# Import database and auth modules
+# Import database and auth
 from database import get_db, init_db, User, GameRequest as DBGameRequest, JoinRequest as DBJoinRequest
 from auth import create_access_token, decode_access_token, get_password_hash, verify_password
 
-# Load environment variables
+# Load env var
 load_dotenv()
 
-# Initialize FastAPI app
+# Initialize fastAPI
 app = FastAPI(title="PromptPlay API")
 
 # Add CORS middleware

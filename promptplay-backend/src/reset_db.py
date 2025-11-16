@@ -9,19 +9,19 @@ from database import engine, Base, SessionLocal, User, GameRequest, JoinRequest
 
 def reset_all():
     """Drop all tables and recreate them (complete reset)"""
-    print("🗑️  Dropping all tables...")
+    print("Dropping all tables...")
     Base.metadata.drop_all(bind=engine)
-    print("✅ All tables dropped")
+    print("All tables dropped")
     
-    print("🔨 Creating fresh tables...")
+    print("Creating fresh tables...")
     Base.metadata.create_all(bind=engine)
-    print("✅ Database reset complete!")
+    print("Database reset complete!")
 
 def clear_all_data():
     """Keep tables but delete all data"""
     db = SessionLocal()
     try:
-        print("🗑️  Clearing all data...")
+        print("Clearing all data...")
         
         # Delete in order (respecting foreign keys)
         deleted_join_requests = db.query(JoinRequest).delete()
@@ -34,10 +34,10 @@ def clear_all_data():
         print(f"   Deleted {deleted_users} users")
         
         db.commit()
-        print("✅ All data cleared!")
+        print("All data cleared!")
     except Exception as e:
         db.rollback()
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
     finally:
         db.close()
 
@@ -45,7 +45,7 @@ def clear_games_only():
     """Clear only game-related data, keep users"""
     db = SessionLocal()
     try:
-        print("🗑️  Clearing game data...")
+        print("Clearing game data...")
         
         deleted_join_requests = db.query(JoinRequest).delete()
         print(f"   Deleted {deleted_join_requests} join requests")
@@ -54,10 +54,10 @@ def clear_games_only():
         print(f"   Deleted {deleted_games} game requests")
         
         db.commit()
-        print("✅ Game data cleared! Users preserved.")
+        print("Game data cleared! Users preserved.")
     except Exception as e:
         db.rollback()
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
     finally:
         db.close()
 
@@ -69,13 +69,13 @@ def show_stats():
         game_count = db.query(GameRequest).count()
         join_count = db.query(JoinRequest).count()
         
-        print("\n📊 Database Statistics:")
+        print("\nDatabase Statistics:")
         print(f"   Users: {user_count}")
         print(f"   Game Requests: {game_count}")
         print(f"   Join Requests: {join_count}")
         
         if user_count > 0:
-            print("\n👥 Users:")
+            print("\nUsers:")
             users = db.query(User).all()
             for user in users:
                 guest_badge = " (Guest)" if user.is_guest else ""
@@ -88,15 +88,15 @@ def delete_database_file():
     """Delete the database file completely"""
     db_path = "./promptplay.db"
     if os.path.exists(db_path):
-        print(f"🗑️  Deleting database file: {db_path}")
+        print(f"Deleting database file: {db_path}")
         os.remove(db_path)
-        print("✅ Database file deleted!")
-        print("💡 Run the backend to create a fresh database")
+        print("Database file deleted!")
+        print("Run the backend to create a fresh database")
     else:
-        print("❌ Database file not found")
+        print("Database file not found")
 
 def main():
-    print("🎮 PromptPlay Database Reset Utility\n")
+    print("PromptPlay Database Reset Utility\n")
     
     if len(sys.argv) > 1:
         command = sys.argv[1]
@@ -105,29 +105,29 @@ def main():
             show_stats()
         elif command == "clear-all":
             show_stats()
-            confirm = input("\n⚠️  Delete ALL data? (yes/no): ")
+            confirm = input("\nDelete ALL data? (yes/no): ")
             if confirm.lower() == 'yes':
                 clear_all_data()
                 show_stats()
         elif command == "clear-games":
             show_stats()
-            confirm = input("\n⚠️  Delete all games but keep users? (yes/no): ")
+            confirm = input("\nDelete all games but keep users? (yes/no): ")
             if confirm.lower() == 'yes':
                 clear_games_only()
                 show_stats()
         elif command == "reset":
             show_stats()
-            confirm = input("\n⚠️  RESET entire database (drop & recreate)? (yes/no): ")
+            confirm = input("\nRESET entire database (drop & recreate)? (yes/no): ")
             if confirm.lower() == 'yes':
                 reset_all()
                 show_stats()
         elif command == "delete-file":
             show_stats()
-            confirm = input("\n⚠️  DELETE database file completely? (yes/no): ")
+            confirm = input("\nDELETE database file completely? (yes/no): ")
             if confirm.lower() == 'yes':
                 delete_database_file()
         else:
-            print(f"❌ Unknown command: {command}")
+            print(f"Unknown command: {command}")
             print_usage()
     else:
         print_usage()
