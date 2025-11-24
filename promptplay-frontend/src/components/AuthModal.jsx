@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Input } from './ui/input'
 import { Loader2, LogIn, UserPlus, Trophy } from 'lucide-react'
 
-const API_BASE_URL = 'http://localhost:8000'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 export default function AuthModal({ onAuthSuccess }) {
   const [authMode, setAuthMode] = useState('guest')

@@ -6,7 +6,7 @@
 
 \title{\textbf{PromptPlay: AI-Powered Sports Matchmaking Platform}\\
 \large CW3 - Proof of Concept Explanation}
-\author{Student ID: s2510156}
+% \author{Student ID: s2510156}
 \date{November 2025}
 
 \begin{document}
@@ -15,7 +15,7 @@
 
 \section{Introduction}
 
-PromptPlay is an innovative sports matchmaking application that fundamentally reimagines how people connect for recreational activities. Unlike traditional sports apps that rely on rigid form-based filtering systems, PromptPlay leverages Large Language Models (LLMs) to enable natural, conversational interaction. Users simply describe what they want to play in their own words, and the AI handles the complex tasks of data extraction and semantic matching.
+PromptPlay is an innovative sports matchmaking application that fundamentally reshapes how people connect for recreational activities. Unlike traditional sports apps that rely on rigid form-based filtering systems, PromptPlay leverages Large Language Models (LLMs) to enable natural, conversational interaction. Users simply describe what they want to play in their own words, and the AI handles the complex tasks of data extraction and semantic matching.
 
 \section{Innovation and Benefit}
 
@@ -25,7 +25,7 @@ Current sports matchmaking platforms suffer from a critical user experience flaw
 
 \subsection{PromptPlay's Innovation: Natural Language First}
 
-PromptPlay's core innovation is its \textit{semantic matching engine} powered by LLMs. The application implements two sophisticated AI use cases that work in tandem:
+PromptPlay's core innovation is its \textit{semantic matching engine} powered by LLMs. The application implements two sophisticated AI use cases:
 
 \textbf{1. Natural Language to Structured Data (NL-to-JSON):} When a user types a casual request like ``I want to play tennis for 2 people at the meadows on Wednesday 4pm,'' the system employs an LLM with a carefully designed prompt to extract structured information: sport type, location, datetime, and required players. The LLM handles temporal reasoning (``tomorrow'' becomes tomorrow's date), quantity inference (``for 2 people'' means 1 additional player needed), and location normalization. This eliminates the need for form fields entirely while still maintaining structured data for backend processing.
 
@@ -41,22 +41,21 @@ This approach delivers three major benefits: \textit{Speed}—users can post a r
 
 PromptPlay follows a clean separation between frontend and backend, with LLM integration at the core of the backend logic.
 
-\textbf{Backend (FastAPI + Groq):} The backend is built with FastAPI (Python), chosen for its speed, automatic API documentation, and excellent async support. The application uses Groq's LLM API, which provides OpenAI-compatible endpoints with fast inference times. I selected the ``openai/gpt-oss-120b'' model for its strong reasoning capabilities necessary for semantic understanding.
+\textbf{Backend (FastAPI + Groq):} The backend is built with FastAPI (Python), chosen for its speed, automatic API documentation, and excellent async support. The application uses Groq's LLM API, which provides OpenAI-compatible endpoints with fast inference times.
 
 The backend implements three key layers: \textit{API layer} (RESTful endpoints with Pydantic validation), \textit{LLM layer} (encapsulated in a \texttt{call\_llm()} function for reusability), and \textit{Data layer} (SQLAlchemy ORM with SQLite for persistence). JWT authentication ensures secure user sessions, while comprehensive error handling provides clear feedback when LLM extraction fails (e.g., missing location information).
 
 \textbf{Frontend (React + Tailwind):} The frontend is built with React 18 and Vite for fast development. I chose shadcn/ui as the component library for its accessibility and modern design language. The application features a three-tab interface: \textit{Home} (post new games and find matches), \textit{My Games} (view hosted and joined games with join request management), and \textit{Browse} (explore all available games).
 
-Critical features include auto-refresh mechanisms (3-5 second intervals), real-time notification badges, and cross-tab synchronization via localStorage events. The UI employs a professional green color scheme with custom animations (fade-in, slide-up, pulse-border) to provide visual feedback during LLM processing.
 
 \subsection{LLM Integration Details}
 
 \textbf{Use Case 1 - Extraction (POST /create-request):} The endpoint receives a JSON payload with a single field: \texttt{prompt}. The system constructs a specialized prompt for the LLM:
 
 \begin{verbatim}
-System: "You are an assistant that converts natural language 
-requests into structured JSON. Extract: sport, location, 
-datetime_utc, players_needed. Today is [current_date]. 
+System: "You are an assistant that converts natural language
+requests into structured JSON. Extract: sport, location,
+datetime_utc, players_needed. Today is [current_date].
 Respond ONLY with valid JSON."
 User: [user's natural language input]
 \end{verbatim}
@@ -66,9 +65,9 @@ The LLM response is parsed as JSON and validated. If critical fields are missing
 \textbf{Use Case 2 - Matching (POST /find-match):} This endpoint iterates through all open game requests in the database. For each, it constructs a comparison prompt:
 
 \begin{verbatim}
-System: "You are a matching assistant. Consider: sport 
-compatibility, location proximity, time flexibility, 
-overall context. Respond ONLY with JSON: 
+System: "You are a matching assistant. Consider: sport
+compatibility, location proximity, time flexibility,
+overall context. Respond ONLY with JSON:
 {is_match, compatibility_score, reason}."
 User: "New request: [user_input]
 Existing post: [existing_prompt]
@@ -77,16 +76,6 @@ Are these a good match?"
 \end{verbatim}
 
 The system collects all matches with \texttt{is\_match: true}, sorts by compatibility score, and returns the top results. This allows users to see their best options first.
-
-\subsection{Technical Challenges Solved}
-
-\textbf{LLM Output Consistency:} Early testing revealed LLMs sometimes returned markdown-wrapped JSON (e.g., \texttt{```json...```}). I solved this by explicitly instructing ``Do not include any explanation or markdown formatting'' in the system prompt, and implemented robust JSON parsing with try-catch error handling.
-
-\textbf{Temporal Reasoning:} Converting ``tomorrow'' to an actual datetime required passing the current date to the LLM in the prompt. The LLM reliably converts relative terms to ISO format dates.
-
-\textbf{Cross-Tab Synchronization:} When users have multiple tabs open, changes in one tab (e.g., accepting a join request) must reflect in others. I implemented a localStorage event listener that detects changes and triggers state updates across all tabs, ensuring consistency.
-
-\textbf{Notification System:} Hosts need immediate awareness of join requests. I implemented a badge system that counts pending requests and displays a red notification badge on the ``My Games'' tab. Cards with pending requests receive visual highlighting (red/orange gradient borders and pulsing animations) for maximum visibility.
 
 \section{Completeness as a Proof of Concept}
 
@@ -104,18 +93,6 @@ The PoC successfully demonstrates:
 \item Polished, responsive UI with real-time updates
 \item Notification system for user engagement
 \end{itemize}
-
-\subsection{What is Intentionally Out of Scope}
-
-To maintain the 20-24 hour timeline and avoid overengineering, the following features are deliberately postponed for future development:
-
-\textbf{Chat System:} While valuable, implementing real-time chat would require WebSocket infrastructure, message storage, and significant additional UI work. The current join request system with descriptions provides sufficient communication for a PoC.
-
-\textbf{Advanced Filtering:} Traditional filter options (skill level, age range, recurring games) are intentionally omitted—they would undermine the ``natural language first'' philosophy that distinguishes PromptPlay.
-
-\textbf{Production Deployment:} The application runs locally on localhost. Deploying to cloud platforms (AWS, Heroku) with domain configuration is outside the PoC scope but straightforward given the containerizable architecture.
-
-\textbf{Payment Integration:} Monetization features (premium accounts, featured posts) are future considerations once the core value proposition is validated.
 
 \subsection{Validation of Core Value}
 

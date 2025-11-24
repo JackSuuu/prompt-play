@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./promptplay-backend
+    container_name: promptplay-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-this-in-production}
+    volumes:
+      - ./promptplay-backend/game_requests.db:/app/game_requests.db
+    networks:
+      - promptplay-network
+    restart: unless-stopped
+
+  frontend:
+    build: ./promptplay-frontend
+    container_name: promptplay-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - promptplay-network
+    restart: unless-stopped
+
+networks:
+  promptplay-network:
+    driver: bridge

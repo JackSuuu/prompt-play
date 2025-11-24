@@ -13,23 +13,6 @@ Traditional sports matchmaking apps require users to fill out multiple fields (s
 - **Smart Extraction**: Converts casual text into structured game requests
 - **Compatibility Scoring**: Finds the best matches based on context, not just filters
 
-## Project Structure
-
-```
-cw3/
-├── promptplay-backend/     # FastAPI backend with Groq LLM integration
-│   ├── main.py            # API endpoints and LLM logic
-│   ├── database.py        # SQLAlchemy models
-│   ├── auth.py            # JWT authentication
-│   └── reset_db.py        # Database utility
-└── promptplay-frontend/    # React + Tailwind UI
-    ├── src/
-    │   ├── App.jsx        # Main application
-    │   ├── components/    # Reusable UI components
-    │   └── lib/           # Utilities
-    └── package.json
-```
-
 ## Quick Start
 
 ### 1. Backend Setup (Terminal 1)
@@ -70,32 +53,6 @@ npm run dev
 
 Frontend will be available at: `http://localhost:5173`
 
-## Key Features Implemented
-
-### Backend (FastAPI + Groq LLM)
-
-- **User Authentication**: JWT-based auth with guest and registered user support
-- **LLM Use Case 1 - NL to Structured Data**: Converts "tennis at meadows tomorrow" → structured JSON
-- **LLM Use Case 2 - Semantic Matching**: Intelligently matches compatible game requests
-- **Join Request System**: Players can request to join games, hosts can accept/reject
-- **Real-time Notifications**: Badge system for pending join requests
-- **SQLite Database**: Persistent storage with SQLAlchemy ORM
-- **Full CRUD Operations**: Create, read, update, delete game requests
-- **Validation & Error Handling**: Comprehensive error messages with suggestions
-
-### Frontend (React + Tailwind + shadcn/ui)
-
-- **Modern Green Theme**: Professional UI with custom animations
-- **Multi-View Navigation**: Home, My Games (hosted/joined), Browse Posts
-- **Authentication Modal**: Login, register, and guest access
-- **Post Game Requests**: Natural language input with AI extraction
-- **Find Matches**: Semantic search with compatibility scores
-- **Join Request Management**: Send, view, accept/reject requests
-- **Notification System**: Visual indicators for pending requests (badges, card highlighting)
-- **Cross-Tab Synchronization**: Multi-tab support with localStorage sync
-- **Auto-Refresh**: Real-time updates every 3-5 seconds
-- **Responsive Design**: Works on desktop, tablet, and mobile
-
 ## Testing the Application
 
 ### Demo Scenario 1: LLM-Powered Game Creation
@@ -106,7 +63,7 @@ Frontend will be available at: `http://localhost:5173`
    - Type: "I want to play tennis for 2 people at the meadows on Wednesday 4pm"
    - Click "Post New Game"
    - Watch the LLM extract structured data (sport, location, time, players)
-   - See your post in "My Games" → "Hosted" view
+   - See your post in "My Games" -> "Hosted" view
 
 ### Demo Scenario 2: Semantic Matching
 
@@ -124,12 +81,6 @@ Frontend will be available at: `http://localhost:5173`
 6. **View requests**: User 1 clicks on the game card with pending requests
 7. **Accept/Reject**: User 1 reviews and accepts/rejects the join request
 8. **Confirmation**: User 2 sees the game in "Joined Games"
-
-### Demo Scenario 4: Multi-Tab Sync
-
-9. **Open two tabs**: Login as same user in two browser tabs
-10. **Make changes**: Accept a request in tab 1
-11. **Auto-sync**: Tab 2 automatically updates without refresh
 
 ## API Endpoints
 
@@ -158,35 +109,6 @@ Frontend will be available at: `http://localhost:5173`
 
 - `GET /my-games/hosted` - Get games I'm hosting
 - `GET /my-games/joined` - Get games I've joined
-
-## Tech Stack
-
-**Backend:**
-
-- FastAPI (Python web framework)
-- Groq (LLM API - OpenAI compatible)
-- Pydantic (Data validation)
-- Uvicorn (ASGI server)
-
-**Frontend:**
-
-- React 18
-- Vite (Build tool)
-- Tailwind CSS (Styling)
-- shadcn/ui (Component library)
-- Axios (HTTP client)
-- Lucide React (Icons)
-
-## Next Steps for Full Implementation
-
-- [x] Add user authentication
-- [x] Implement chat functionality
-- [x] Add persistent database (PostgreSQL)
-- [ ] Deploy to cloud (backend + frontend)
-- [ ] Add email/SMS notifications
-- [ ] Implement real-time updates (WebSockets)
-- [ ] Add profile pages
-- [ ] Add game history
 
 ## Troubleshooting
 

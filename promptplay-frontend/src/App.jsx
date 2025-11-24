@@ -8,7 +8,7 @@ import { Loader2, Plus, Search, Calendar, MapPin, Users, Trophy, List, X, LogOut
 import AuthModal from './components/AuthModal'
 import MyGames from './components/MyGames'
 
-const API_BASE_URL = 'http://localhost:8000'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 // Set up axios interceptor to include auth token
 axios.interceptors.request.use((config) => {
@@ -383,7 +383,7 @@ function App() {
             </div>
           </div>
           
-          <h1 className="text-5xl font-bold text-gray-900 mb-2 flex items-center justify-center gap-3 animate-bounce-subtle">
+          <h1 className="text-5xl font-bold text-gray-900 mb-2 flex items-center justify-center gap-3">
             <Trophy className="h-12 w-12 text-green-600" />
             PromptPlay
           </h1>
@@ -623,7 +623,7 @@ function App() {
               <Card className="shadow-lg animate-pop-in">
                 <CardHeader>
                   <CardTitle className="text-green-800 flex items-center gap-2">
-                    <span className="animate-bounce">🎯</span> Found {matches.length} Match{matches.length !== 1 ? 'es' : ''}!
+                    <span className="">🎯</span> Found {matches.length} Match{matches.length !== 1 ? 'es' : ''}!
                   </CardTitle>
                   <CardDescription>
                     These games match your request, sorted by compatibility
